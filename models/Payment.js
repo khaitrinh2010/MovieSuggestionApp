@@ -7,7 +7,7 @@ const paymentSchema = mongoose.Schema({
     },
     reference: {
         type: String,
-        required: true
+        
     },
     currency: {
         type: String,
@@ -27,11 +27,11 @@ const paymentSchema = mongoose.Schema({
     },
     monthlyRequestCount: { //this depends on the subscription type
         type: Number,
-        required: true
+        
     },
 }, {
     timestamps: true
 })
 
 const Payment = mongoose.model("Payment", paymentSchema)
-module.exports = {Payment}
+module.exports = Payment

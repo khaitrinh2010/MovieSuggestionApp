@@ -1,4 +1,4 @@
-const {User} = require("../models/User")
+const User = require("../models/User")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 //registration
@@ -22,7 +22,7 @@ const register = async(req, res)=>{
             username, email, password: hashedPassword
         })
 
-        //will expire 3 days from now 
+        //will expire 3 days from now, trialExpires is the time the trial becomes expire
         newUser.trialExpires = new Date(new Date().getTime() + newUser.trialPeriod * 24 * 60 * 60* 1000)
         await newUser.save()
         return res.json({
@@ -69,12 +69,26 @@ const logout = async(req, res)=>{
 }
 
 const userProfile = async(req, res)=>{
-    const id = ""
+    const id = req?.user?._id
     const user = await User.findById(id)
     if(user){
-        return res.json({status: "success"})
+        return res.json({status: "success", user: user})
     }
     return res.json({status: "fail"})
 }
 
-module.exports = {register, login, logout, userProfile}
+const checkAuth = async(req, res)=>{
+    const decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY)
+    if(decoded){
+        return res.json({
+            status: true
+        })
+    }
+    else{
+        return res.json({
+            status: false
+        })
+    }
+}
+
+module.exports = {register, login, logout, userProfile, checkAuth}

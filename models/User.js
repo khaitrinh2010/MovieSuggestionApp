@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
     trialExpires : {
         type: Date
     },
-    subscription: {
+    subscriptionPlan: {
         type: String,
         enum: ["Trial", "Free", "Basic", "Premium"]
     },
@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
     },
     monthlyRequestCount: { //this depends on the subscription type
         type: Number,
-        default: 0
+        default: 100 //default when 3 days trial is implemented
     },
     nextBillingDate: {
         type: Date,
@@ -42,8 +42,12 @@ const userSchema = mongoose.Schema({
     payments: [{type: mongoose.Schema.ObjectId, ref: "Payment"}], //name of the model : Payment
     history: [{type: mongoose.Schema.ObjectId, ref: "History"}]
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON : {virtuals: true},  
+    toObject : {virtuals: true} //these 2 lines help us see this properties upon querying
 })
+
+//virtual properrties: useful for fields that can be derived from other fields in the database
 
 const User = mongoose.model("User", userSchema)
 module.exports =  User 
