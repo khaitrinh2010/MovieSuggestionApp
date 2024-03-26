@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema({
     },
     subscriptionPlan: {
         type: String,
-        enum: ["Trial", "Free", "Basic", "Premium"]
+        enum: ["Trial", "Free", "Basic", "Premium"],
+        default: "Trial"
     },
     apiRequestCount: {
         type: Number,
@@ -38,6 +39,7 @@ const userSchema = mongoose.Schema({
     },
     nextBillingDate: {
         type: Date,
+        default: new Date()
     },
     payments: [{type: mongoose.Schema.ObjectId, ref: "Payment"}], //name of the model : Payment
     history: [{type: mongoose.Schema.ObjectId, ref: "History"}]

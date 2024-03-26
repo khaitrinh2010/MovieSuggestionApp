@@ -7,6 +7,7 @@ const isAuthenticated = asyncHandler((async(req, res, next)=>{
         //the verify function returns ana object stored in the decoded, this is piece of
         //information encoded with the token 
         //each token here is assigned with an user
+        //use jwt.verify to decode the token
         const decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY)
         //add the user to the req object
         req.user = await User.findById(decoded?.id).select("-password")

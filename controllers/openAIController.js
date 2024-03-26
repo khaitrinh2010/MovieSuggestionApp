@@ -10,7 +10,7 @@ const aiController = async (req, res)=>{
     const userMessage = req.body.prompt
     conversationHistory.push({role: "user", content: userMessage})
     try{
-        const response = await openai.chat.completions.create({messages: conversationHistory, model: "gpt-3.5-turbo", max_tokens: 5}) //limit the words being generated}) //generate the answer bassed on the context of the conversation
+        const response = await openai.chat.completions.create({messages: conversationHistory, model: "gpt-3.5-turbo", max_tokens: 40}) //limit the words being generated}) //generate the answer bassed on the context of the conversation
         const resp = response.choices[0].message.content
         const newContent = await History.create({
             user: req?.user?._id,

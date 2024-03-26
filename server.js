@@ -1,6 +1,7 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const cookieParser = require("cookie-parser")
+const cors = require("cors")
 const cron = require("node-cron")
 dotenv.config()
 require("./utils/connectDB")
@@ -77,7 +78,14 @@ cron.schedule("0 0 1 * * *", async(req, res)=>{
 
     }
 })
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true
+}
+//which means that only web pages served from this origin 
+//are permitted to make requests to the server
 
+app.use(cors(corsOptions))
 app.use("/api/v1/users", userRoute)
 app.use("/api/v1/openai", aiRoute)
 app.use("/api/v1/stripe", stripeRoute)

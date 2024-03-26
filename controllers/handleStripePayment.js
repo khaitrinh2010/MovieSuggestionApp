@@ -70,7 +70,7 @@ const handleFree = async(req, res)=>{
     }
 }
 
-//server verifies the payment
+//server verifies the payment and update the user information in the database
 const verifyPayment = async (req, res) => {
     const { paymentID } = req.params;
     try {
