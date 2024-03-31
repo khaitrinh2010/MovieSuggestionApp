@@ -79,6 +79,7 @@ const userProfile = async(req, res)=>{
 
 const checkAuth = async(req, res)=>{
     const decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY)
+    console.log(decoded)
     if(decoded){
         return res.json({
             status: true

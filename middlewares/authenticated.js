@@ -8,6 +8,7 @@ const isAuthenticated = asyncHandler((async(req, res, next)=>{
         //information encoded with the token 
         //each token here is assigned with an user
         //use jwt.verify to decode the token
+        //if the token is valid, the verify function returns the payload, the first argument
         const decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY)
         //add the user to the req object
         req.user = await User.findById(decoded?.id).select("-password")
